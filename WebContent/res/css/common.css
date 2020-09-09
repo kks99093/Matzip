@@ -12,7 +12,8 @@ html, body{
 	width:100%;
 	height:100%;
 }
-#sectionContainerCenter{
+#join_sectionContainerCenter{
+	background-image:url("images/freljord_bg.gif");
 	width: 100%;
 	height: 100%;
 	display: flex;
@@ -20,9 +21,88 @@ html, body{
 	align-items: center;
 }
 
-.frm{
-	padding: 15px;
+#login_sectionContainerCenter{
+	position:absolute;
+	background-image:url("images/login_conbg.png");
+	width: 100%;
+	height: 100%;
+}
+.login_form{
+	display:inline-block;
+	float:left;
+	width:15%;
+	margin: 10% 0px 0px 3%;
+}
+.login_form input{
+	border:none;
+	background-color: #EDEDED;
+	width: 110%;
+	margin: 10% 0px 10% 0px;
+	padding: 10%;
+}
+
+.login_form a{
+	text-decoration: none;	
+	color: #808080;
+}
+
+#login_border{
+	background-color:white;
+	margin: 3% 5% 0px 5%;
+	width:90%;
+	height:85%;
 	border: 1px solid #bdc3c7;
+}
+#login_submit{
+	margin-left: 35%;
+	background-color: ;
+	width:100px;
+	height:100px;
+	background-image:url("images/login_btn.png");
+	background-repeat:no-repeat;
+	cursor:pointer;
+}
+.join_form{
+	padding:10px;
+	background: rgb(235,241,246);
+	background: linear-gradient(to bottom, rgba(235,241,246,1) 0%,rgba(171,211,238,1) 50%,rgba(137,195,235,1) 51%,rgba(213,235,251,1) 100%);
+	border-radius: 15%;
+	width:150%;
+	height:100%;
+}
+.join_form input {
+	background-color: #EFEFEF;
+	border: none;
+	border-radius: 30%;
+	padding: 4%;
+	margin: 4%;
+}
+.join_form button{
+	border:none;
+	padding: 2%;
+	margin-left:5%;
+	border-radius: 30%;
+}
+
+#join_to_login a{
+	text-decoration: none;
+	color: green;
+	font-size:30px;
+	font-weight: bold;
+}
+#join_submit{
+	padding: 3%;
+	margin-left:40%;
 }
 
 .msg {color: red; }
+
+#login_bg{
+	display:inline-block;
+	float:right;
+	width:75%;
+	height:100%;
+	background-image: url("images/login_bg.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+}
