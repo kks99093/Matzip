@@ -35,6 +35,15 @@ public class UserService {
 		} else {
 			String encryptPw = SeacurityUtils.getEncrypt(pw, dbresult.getSalt());
 			if(dbresult.getUser_pw().equals(encryptPw)) {
+				//param = dbresult 하면 안되는이유
+				//param은 컨트롤러의 param의 주소값을 갖고있었는데 저렇게 해보리면
+				//dbresult의 주소값으로 바껴버리기때문
+				
+				//여기서 param에다가 그냥 담은다음에 controller에서 세션에 박기
+				param.setUser_pw(null);
+				param.setI_user(dbresult.getI_user());
+				param.setNm(dbresult.getNm());
+				param.setProfile_img(dbresult.getProfile_img());
 				result = 1; //로그인성공
 			}
 			else {

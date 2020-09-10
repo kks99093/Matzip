@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <div id="join_sectionContainerCenter">
-	<div>
+	<div = class="join_div">
 		<form id="frm" class="join_form" action="/user/joinProc" method="post" onsubmit="return chk()">
 			<div id="idChkResult" class="msg"></div>
 			<div><input type="text" name="user_id" placeholder="아이디">
@@ -14,7 +14,9 @@
 		</form>	
 		<div id="join_to_login"><a href="/user/login">로그인</a></div>	
 	</div>
-	
+	<div class="bg_cover"></div>
+</div>
+
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 	<script>
 	//ㅡㅡㅡㅡ 아이디 중복 체크 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
@@ -22,7 +24,8 @@
 			const user_id = frm.user_id.value
 			axios.get('/user/ajaxChk',{
 				params:{
-					user_id
+					'user_id': user_id,
+					//post는 { 'user_id' : user_id} 만적어줘도됨, get일때만 params씀
 				}
 			}).then(function(res){
 				console.log(res)

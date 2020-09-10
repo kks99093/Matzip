@@ -6,6 +6,8 @@
 <meta charset="UTF-8">
 <title>${title}</title>
 <link rel="stylesheet" type="text/css" href="/res/css/common.css">
+<link rel="stylesheet" type="text/css" href="/res/css/login.css">
+<link rel="stylesheet" type="text/css" href="/res/css/join.css">
 </head>
 <body>
 	<div id="container">

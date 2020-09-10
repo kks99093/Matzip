@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/")
 //모든 요청은 여기로 온다
 //단, web.xml에서 설정해놓은 /res/만 Container로 간다
+//몰아줬을때 장점 - 관리가 편하다
 public class Container extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -33,7 +34,13 @@ public class Container extends HttpServlet {
 	}
 	
 	private void proc(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//몰아줬을때 장점 - 관리가 편하다
+		//로그인에 따른 접속 가능여부 판단
+		String routerCheckResult = LoginChekInterceptor.routerChk(request);
+		if(routerCheckResult != null) {
+			response.sendRedirect(routerCheckResult);
+			return;
+		}
+		
 		String temp = mapper.nav(request);
 		
 		// 슬러쉬(/)가 없다면 무조건 -1을 리턴하기때문에 if문에 들어가지않음

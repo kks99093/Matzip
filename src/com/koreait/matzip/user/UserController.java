@@ -1,7 +1,9 @@
 package com.koreait.matzip.user;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import com.koreait.matzip.CommonUtils;
 import com.koreait.matzip.Const;
 import com.koreait.matzip.ViewRef;
 import com.koreait.matzip.vo.UserVO;
@@ -49,13 +51,26 @@ public class UserController {
 		param.setUser_pw(user_pw);
 		
 		int result = service.login(param);
-		if(result == 1) {
+		if(result == 1) { //로그인 성공
+			HttpSession hs = request.getSession();
+			hs.setAttribute(Const.LOGIN_USER , param);
+			//로그인한 유저의 i_user,id,nm,profile_img
+			
 			return "redirect:/restaurant/restMap";
 		}else {
 			return "redirect:/user/login?error=" + result;
 		}
 
 	}
+//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ로그아웃ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+	public String logout(HttpServletRequest request) {
+		HttpSession hs = request.getSession();
+		hs.invalidate(); //로그아웃할때 세션에 있던 정보를 날림
+		
+		return "redirect:/user/login";
+	}
+	
+	
 //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ가입ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 	public String join(HttpServletRequest request) {
 		request.setAttribute(Const.TITLE, "회원가입");

@@ -2,13 +2,16 @@ package com.koreait.matzip;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.koreait.matzip.restaurant.RestaurantController;
 import com.koreait.matzip.user.UserController;
 
 public class HandlerMapper {
 	private UserController userCon;	
+	private RestaurantController restCon;
 	
 	public HandlerMapper() {
 		userCon = new UserController();
+		restCon = new RestaurantController();
 	}
 	
 	
@@ -22,7 +25,7 @@ public class HandlerMapper {
 		}
 						
 		switch(uriArr[1]) { //1번방은 컨트롤러 어떤컨트롤러인지 여기서 구분
-		case ViewRef.URI_USER :			
+		case ViewRef.URI_USER :			//user
 			switch(uriArr[2]) { //2번방은 메소드(어떤 template(jsp파일)을 열지)
 			case "login":
 				return userCon.login(request);
@@ -34,6 +37,14 @@ public class HandlerMapper {
 				return userCon.joinProc(request);
 			case "ajaxChk":
 				return userCon.ajaxIdChk(request);
+			case "logout":
+				return userCon.logout(request);
+			
+			}
+		case ViewRef.URI_RESTAURANT:
+			switch(uriArr[2]) {
+			case "restMap":
+				return restCon.restMap(request);
 			}
 		}
 		

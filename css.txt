@@ -1,0 +1,42 @@
+﻿패딩 px로 줬을떄 비율 유지
+object-fit: cover => 이미지 비율 유지
+
+*{
+	box-sizing: border-box;
+}
+
+html,body
+#container
+전부 width:100%, height:100% 주면 모든화면을 다 사용한다는뜻
+
+display:flex는 가로방향이 기본
+flex-direction:column; 방향을 세로로바꿔줌
+
+#container > header{
+	padding: 10px;
+	background-color: #a29bfe;
+	height: 70px;
+}
+
+#container > section{
+	flex-grow: 1; =>부모가 flex일때만 쓸수있음 혼자만 grow 1을 해놓으면 header와 footer의 공간외의 모든공간을 얘가 차지한다
+					만약 grow 1이 2군대 설정해놓으면 남는공간을 1대1비율로 가져간다
+					width 50% float left 주던거 할수있나?
+}
+
+#container > footer{
+	padding: 10px;
+	display: flex;
+	justify-content: center;  => 세로방향 정렬
+	align-items: center;		=> 가로방향 정렬
+	color: white;
+	background-color: #636e72;
+	height: 80px; 
+}
+
+
+.ml5{margin-left:5px}
+.ml10{margin-left:10px;}
+.ml15{margin-left:15px;}
+
+이런식으로 마진 필요할때 클래스만줘서 바꾸는방법 쓰는사람들도 있음
