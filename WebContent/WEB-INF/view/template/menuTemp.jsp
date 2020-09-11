@@ -26,15 +26,16 @@
 				<div class="ml15" id="headerLogout"><a href="/user/logout">로그아웃</a></div>
 			</div>			
 			<div id="headerRight">
-				<a class="ml15" href="/restaurant/reg">등록</a>
-				<a href="/user/favorite">찜</a>
+				<a href="/restaurant/restMap" class="ml15">지도가기</a>
+				<a href="/restaurant/restReg" class="ml15" >등록</a>
+				<a href="/user/restFavorite" class="ml15">찜</a>
 			</div>
 		</header>
 		<section>
 			<jsp:include page="/WEB-INF/view/${view}.jsp"></jsp:include>
 		</section>
 		<footer>
-			회사정보
+			<span style="font-size:small;">(주)다성바보</span>
 		</footer>
 	</div>
 </body>

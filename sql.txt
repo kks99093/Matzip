@@ -1,0 +1,67 @@
+﻿UNSIGNED  : 양수만저장 (-127 ~126) -> (0~253) 으로 바뀜
+AUTO_INCREMENT : 오라클DB의 시퀀스 같은거
+mySQL은 nvarchar가 없다
+varchar(5)하면 한글도 5글자 영어도 5글자가 들어간다
+현재시간을 그냥 now()로 함
+primary key, foreign key같은 제약조건을 거는이유는 실수를 안하기 위해서
+
+CREATE TABLE t_user(
+	i_user INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	user_id VARCHAR(30) NOT NULL UNIQUE,
+	user_pw VARCHAR(70) NOT NULL,
+	salt VARCHAR(30) NOT NULL,
+	nm VARCHAR(5) NOT NULL,
+	profile_img VARCHAR(50),
+	r_dt DATETIME DEFAULT NOW(),
+	m_dt DATETIME DEFAULT NOW()
+);
+
+CREATE TABLE t_restaurant(
+	i_rest INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	nm VARCHAR(20) NOT NULL,
+	addr VARCHAR(200) NOT NULL,
+	lat DOUBLE UNSIGNED NOT NULL,
+	lng DOUBLE UNSIGNED NOT NULL,
+	cd_category INT UNSIGNED NOT NULL,
+	i_user INT UNSIGNED NOT NULL COMMENT '등록자',
+	r_dt DATETIME DEFAULT NOW(),
+	m_dt DATETIME DEFAULT NOW(),
+	FOREIGN KEY (i_user) REFERENCES t_user(i_user)
+);
+
+추천메뉴
+CREATE TABLE t_restaurant_recommend_food(
+	i_rest INT UNSIGNED,
+	seq INT UNSIGNED,
+	menu_nm VARCHAR(20) NOT NULL,
+	menu_price INT UNSIGNED NOT NULL,
+	menu_pic VARCHAR(50),
+	PRIMARY KEY(i_rest,seq),
+	FOREIGN KEY(i_rest) REFERENCES t_restaurant(i_rest)
+);
+
+메뉴
+CREATE TABLE t_restaurant_menu(
+	i_rest INT UNSIGNED,
+	seq INT UNSIGNED,
+	menu_pic VARCHAR(50),
+	PRIMARY KEY(i_rest, seq),
+	FOREIGN KEY(i_rest) REFERENCES t_restaurant(i_rest)
+);
+
+
+마스터코드
+m이 카테고리의 제목이라면 d는 값들이라고 보면된다
+CREATE TABLE c_code_m(
+	i_m INT UNSIGNED PRIMARY KEY,
+	`desc` VARCHAR(30) DEFAULT '',
+	cd VARCHAR(10) DEFAULT ''		
+);
+
+CREATE TABLE c_code_d(
+	i_m INT UNSIGNED,
+	cd INT UNSIGNED,
+	val VARCHAR(15) NOT NULL,
+	PRIMARY KEY(i_m,cd),
+	FOREIGN KEY(i_m) REFERENCES c_code_m(i_m)
+);

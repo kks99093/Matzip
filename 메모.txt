@@ -1,0 +1,69 @@
+﻿참고 사이트 : 망고플레이트
+주소 저장할때 서울은 1 경기도는 2 이런식으로 저장하는편이지만
+우리는 일단 전부 문자열로 저장함
+
+만들고자했던것
+짜장면을 검색했을때 지도에 근처 중국집이 쫙찍히게 하는거
+
+//도메인은 셀렉트용
+	//VO는 인설트 업데이트 딜리트용
+
+﻿-식당 리뷰할 수 있는 서비스를 만들것- [실무수준으로 만들어볼거임, 진짜 서비스할만한 수준으로, 거의 스프링과 같은방식]
+(사진도 올릴 수 있고)
+
+GET POST 구분을 주소로할거
+
+서블릿 1개만 사용 - 분기시켜주는 객체만듬(Handler Mapping) =>얘가 어떤컨트롤러의 어떤메소드를 호출할건지 결정, if문으로 다 잡을거
+컨트롤러(기존에 만들던 서블릿) - 서비스 - DAO =>실제 스프링으로는 얘를 만듬(이해하기 위해서 스프링을 쓰지않고 우리가 직접만듬)
+컨트롤러 하나당 서비스하나 DAO하나
+서비스와 컨트롤러 차이 : 컨트롤러는 다리역할, 서비스는 로직역할
+로그인체크한다거나 하는 로직을 서블릿에서 다했는데 이번에는 분리시킴
+
+http://location:8089/(컨트롤러 구분)/(호출할 메소드) <--이런식으로 구조를 잡을거
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+RequestURI()를 사용해서 현재주소값을 불러온후 슬래쉬(/)기준으로 잘라서 사용
+uri의 첫번째 슬러쉬~ 두번째 슬러쉬사이의 값이 res면 파일을 띄움
+이때 split 사용
+String[] uriArr = request.getRequestURI().split("/");
+=슬러쉬(/)기준으로 잘라서 저장 /res/js/test.js => 0번방이 빈칸/ res-1번/ js -2번/ test.js - 3번
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+슬래쉬(/) 하나로만 맵핑할때 해줘야하는 2가지
+1. web.xml에 서블릿 맵핑을 추가
+
+	<servlet>
+	    <servlet-name>staticServlet</servlet-name>
+	    <servlet-class>com.koreait.matzip.StaticContainer</servlet-class> <--여기에 2번에서 만드는 StaticContainer 주소를 적어줌
+	</servlet>
+   
+	<servlet-mapping>
+            	<servlet-name>staticServlet</servlet-name>
+	            <url-pattern>/res/*</url-pattern>		<--여기에 열파일의 위치 /상위폴더이름/*을 한다
+	</servlet-mapping>
+
+2.StaticContainer라는 클래스를만들어서 DefaultServlet를 상속한다(아무내용이 없어도됨)
+	package com.koreait.matzip;
+	import org.apache.catalina.servlets.DefaultServlet;
+	public class StaticContainer extends DefaultServlet{}	<--쌤도처음써보는거라고함
+res로 시작하는 모든주소값은 web.xml에서 먼저 잡아서 연결해준다 (정확히는 모르겠음)
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+템플릿(template)이란
+상단 이미지,메뉴,하단 같은 항상고정되는것들
+필요없는곳에는 default주소를 넣고
+필요한곳에는 템플릿 주소를 넣는다
+
+<jsp:include page="/WEB-INF/view/${view}.jsp"></jsp:include> 인클루드 하는법
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+mariaDB 다운받을때 주의점 Enable access from remote machines for 'root' user <--절대 체크하면 안됨
+			UTF-8 체크해줘야함
+
+mySQL 다운로드  : https://www.mysql.com/ - MySQL Community Downloads - go to download page ->위에꺼 다운
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+카카오 api 라이브러리
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=LIBRARY"></script>
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+오류관련 디버깅하는법
+숫자옆에 더블클릭하면 break point가 걸린다
+서버시작버튼옆에 벌레모양 클릭하면 실행하다가 break point를 만나면 멈춘다
+그때 이클립스와서 F6을 누르면 한칸한칸 넘어가면서 볼수있다
+메소드호출하는경우 그 메소드에 들어가서 break point를 걸어준다
