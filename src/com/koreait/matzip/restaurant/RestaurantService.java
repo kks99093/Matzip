@@ -23,5 +23,9 @@ public class RestaurantService {
 		Gson gson = new Gson();
 		return gson.toJson(list);
 	}
+	//     디테일
+	public RestaurantDomain restDetail(RestaurantVO param) {
+		return dao.selRest(param);
+	}
 	
 }

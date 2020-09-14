@@ -23,8 +23,8 @@
 		function chkId(){
 			const user_id = frm.user_id.value
 			axios.get('/user/ajaxChk',{
-				params:{
-					'user_id': user_id,
+				params: {
+					'user_id' : user_id
 					//post는 { 'user_id' : user_id} 만적어줘도됨, get일때만 params씀
 				}
 			}).then(function(res){

@@ -23,7 +23,9 @@ public class HandlerMapper {
 		if(uriArr.length < 3) {
 			return "405";
 		}
-						
+		for(int i=0; i<uriArr.length; i++) {
+			System.out.println(uriArr[i]);
+		}
 		switch(uriArr[1]) { //1번방은 컨트롤러 어떤컨트롤러인지 여기서 구분
 		case ViewRef.URI_USER :			//user
 			switch(uriArr[2]) { //2번방은 메소드(어떤 template(jsp파일)을 열지)
@@ -51,6 +53,10 @@ public class HandlerMapper {
 				return restCon.restProc(request);
 			case "ajaxGetList":
 				return restCon.ajaxGetList(request);
+			case "restDetail":
+				return restCon.restDetail(request);
+			case "addRecMenusProc":
+				return restCon.addRecMenusProc(request);
 			}
 		}
 		

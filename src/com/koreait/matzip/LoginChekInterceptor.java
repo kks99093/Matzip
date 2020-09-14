@@ -10,7 +10,7 @@ public class LoginChekInterceptor {
 		//로그인이 되어 있으면 login, join 접속 X
 		//로그인에 따른 접속 가능여부 판단
 		//(로그인이 안되어 있으면 접속할 수 있는 주소만 여기로 체크, 나머지 전부 로그인이 되어 있어야함)
-		String[] chkUserUriArr = {"login", "loginProc", "join", "joinProc", "ajaxIdChk"};
+		String[] chkUserUriArr = {"login", "loginProc", "join", "joinProc", "ajaxChk"};
 		boolean isLogout = SeacurityUtils.isLogout(request);
 		String[] targetUri = request.getRequestURI().split("/");
 		
