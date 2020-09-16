@@ -24,7 +24,7 @@ public class HandlerMapper {
 			return "405";
 		}
 		for(int i=0; i<uriArr.length; i++) {
-			System.out.println(uriArr[i]);
+			System.out.println("uriArr["+i+"] : " +uriArr[i]);
 		}
 		switch(uriArr[1]) { //1번방은 컨트롤러 어떤컨트롤러인지 여기서 구분
 		case ViewRef.URI_USER :			//user
@@ -59,6 +59,8 @@ public class HandlerMapper {
 				return restCon.addRecMenusProc(request);
 			case "ajaxDelRecMenu":
 				return restCon.ajaxDelRecMenu(request);
+			case "addMenuProc":
+				return restCon.addMenuProc(request);
 			}
 		}
 		

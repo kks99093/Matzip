@@ -10,6 +10,12 @@ import javax.servlet.http.HttpSession;
 import com.koreait.matzip.vo.UserVO;
 
 public class SeacurityUtils {
+	
+	//세션에서 I_user 불러오는 메소드를 따로 만듬
+	public static int getLoginUserPk(HttpServletRequest request) {
+		return getLoginUser(request).getI_user();
+	}
+	
 //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ로그인 판단ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 	
 	public static UserVO getLoginUser(HttpServletRequest request) {

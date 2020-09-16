@@ -15,5 +15,7 @@ html, body{
 
 .msg {color: red; }
 
-
+.bg_black {
+	background-color: #000;
+}
 

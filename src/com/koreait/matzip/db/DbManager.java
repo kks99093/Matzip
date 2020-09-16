@@ -8,7 +8,8 @@ import java.sql.ResultSet;
 public class DbManager {
 
 	public static Connection getCon() throws Exception{
-		String url = "jdbc:mysql://localhost:3306/matzip";
+		String url = "jdbc:mysql://localhost:3306/matzip?userUnicode=true&characterEncoding=UTF-8";
+													//mySQL에서 가끔 한글깨지는게 나올수도 있으니 여기서 쿼리스트링으로 인코딩 해줌
 				//					주소:3306/계정이름 <--전부 db에 나와있음
 		String user = "root";
 		String pw = "koreait2020";

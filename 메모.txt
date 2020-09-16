@@ -72,3 +72,15 @@ mySQL 다운로드  : https://www.mysql.com/ - MySQL Community Downloads - go to
 서버시작버튼옆에 벌레모양 클릭하면 실행하다가 break point를 만나면 멈춘다
 그때 이클립스와서 F6을 누르면 한칸한칸 넘어가면서 볼수있다
 메소드호출하는경우 그 메소드에 들어가서 break point를 걸어준다
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+추천메뉴를 조인걸어서 삭제하게 만듬
+DELETE A
+FROM t_restaurant_recommend_menu A
+INNER JOIN t_restaurant B
+ON A.i_rest = B.i_rest
+WHERE A.i_rest = 6
+AND A.seq = 2
+AND B.i_user = 1;
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+form에서 파일보낼때
+<input type="file" name="menu_pic" multiple> multiple을 쓰면 파일여러개 선택가능

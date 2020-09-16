@@ -40,3 +40,6 @@ flex-direction:column; 방향을 세로로바꿔줌
 .ml15{margin-left:15px;}
 
 이런식으로 마진 필요할때 클래스만줘서 바꾸는방법 쓰는사람들도 있음
+
+relative는 위치자체는 static이랑 같다 하지만 자식중에 absolute를 걸어서 본인 기준으로 움직이게 할수있다
+absolute는 부모중에 포지션이 static이 아닌애(relative or absolute)를 찾아서 그거 기준에서 움직인다 (아무것도없다면 body가 기준이됨)

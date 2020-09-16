@@ -7,7 +7,9 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Part;
 
 import com.google.gson.Gson;
 import com.koreait.matzip.CommonUtils;
@@ -39,6 +41,39 @@ public class RestaurantService {
 	public RestaurantDomain restDetail(RestaurantVO param) {
 		return dao.selRest(param);
 	}
+	//메뉴 인설트
+	public int addMenus(HttpServletRequest request) {
+		int i_rest = CommonUtils.getIntParameter(request, "i_rest");
+		RestaurantRecommendMenuVO vo = new RestaurantRecommendMenuVO();
+		vo.setI_rest(i_rest);
+		
+		String targetPath = request.getServletContext().getRealPath("/res/img/restaurant/"+ i_rest + "/menu");
+		FileUtils.makeFolder(targetPath);
+		//메뉴 저장위치 /res/img/restaurant/i_rest/menu/여기에 이미지 넣기
+		try {
+			for(Part part : request.getParts()) {
+				String fileName = part.getSubmittedFileName();	
+				//제일 처음은 null이찍힘 (만약 파일 2개를 올리면  null, 파일1, 파일2 이렇게뜸)
+				if(fileName != null) {					
+					String ext = FileUtils.getExt(fileName); //확장자 얻어옴
+					String saveFileNm = UUID.randomUUID() + ext;
+					System.out.println("svaeFileNm: " + saveFileNm);
+					
+					part.write(targetPath + "/" + saveFileNm); //파일저장					
+					vo.setMenu_pic(saveFileNm);
+					dao.insMenus(vo);
+				}
+			}
+			
+			
+		}catch (Exception e) {
+			
+		}
+		
+		return i_rest;
+	}
+	
+	
 	// 추천메뉴 인설트
 	public int addRecMenus(HttpServletRequest request) {
 		String savePath = request.getServletContext().getRealPath("/res/img/restaurant");
@@ -133,9 +168,15 @@ public class RestaurantService {
 	public List<RestaurantRecommendMenuVO> getRecommendMenuList(int i_rest) {
 		return dao.selRecommendMunuList(i_rest);
 	}
-	
+	//추천메뉴 삭제
 	public int delRecMenu(RestaurantRecommendMenuVO param) {
 		return dao.delRecommendMenu(param);
 	}
+	
+	//메뉴 셀렉트
+	public List<RestaurantRecommendMenuVO> getMenuList(int i_rest) {
+		return dao.selMenuList(i_rest);
+	}
+	
 	
 }

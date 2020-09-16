@@ -1,22 +1,15 @@
 package com.koreait.matzip.restaurant;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Enumeration;
-import java.util.UUID;
-
 import javax.servlet.http.HttpServletRequest;
 
 import com.koreait.matzip.CommonDAO;
 import com.koreait.matzip.CommonUtils;
 import com.koreait.matzip.Const;
-import com.koreait.matzip.FileUtils;
 import com.koreait.matzip.SeacurityUtils;
 import com.koreait.matzip.ViewRef;
 import com.koreait.matzip.vo.RestaurantRecommendMenuVO;
 import com.koreait.matzip.vo.RestaurantVO;
-import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+import com.koreait.matzip.vo.UserVO;
 
 public class RestaurantController {
 	
@@ -74,26 +67,38 @@ public class RestaurantController {
 		request.setAttribute("css", new String[] {"restaurant"});
 		//request에 String 배열을 써서 css넣기 menuTemp 참조(c:forEach) 사용
 		request.setAttribute("recommendMenuList", service.getRecommendMenuList(i_rest));
+		request.setAttribute("menuList", service.getMenuList(i_rest));
 		request.setAttribute("data", service.restDetail(param));
 		request.setAttribute(Const.TITLE, "디테일");
 		request.setAttribute(Const.VIEW, "restaurant/restDetail");
 		return ViewRef.TEMP_MENU;
 	}
-	//메뉴 추가
+	//추천 메뉴 추가
 	public String addRecMenusProc(HttpServletRequest request) {	
 		int i_rest = service.addRecMenus(request);
 			
 		return "redirect:/restaurant/restDetail?i_rest="+i_rest;
 	}
 	
+	//추천메뉴 삭제
 	public String ajaxDelRecMenu(HttpServletRequest request) {
 		int i_rest = CommonUtils.getIntParameter(request, "i_rest");
 		int seq = CommonUtils.getIntParameter(request, "seq");
+		int i_user = SeacurityUtils.getLoginUserPk(request);
+		
 		RestaurantRecommendMenuVO param = new RestaurantRecommendMenuVO();
+		param.setI_user(i_user);
 		param.setI_rest(i_rest);
 		param.setSeq(seq);
 		
 		int result = service.delRecMenu(param);
 		return "ajax:" + result;
 	}
+	
+	//메뉴 추가
+	public String addMenuProc(HttpServletRequest request) {
+		int i_rest = service.addMenus(request);
+		return "redirect:/restaurant/restDetail?i_rest="+i_rest;
+	}
+
 }

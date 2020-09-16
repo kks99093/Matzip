@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 //모든 요청은 여기로 온다
 //단, web.xml에서 설정해놓은 /res/만 Container로 간다
 //몰아줬을때 장점 - 관리가 편하다
+@MultipartConfig(
+		fileSizeThreshold = 10_408_760, // 10mb
+		maxFileSize = 52_428_800, //50mb
+		maxRequestSize = 104_857_600 //1000mb
+		//getParts()를 쓰기위해서 서블릿에서 해줘야함 (파일 여러개 불러오기)
+		//쌤도 처음써보는거라고 함(스프링은 자동으로 해주는데 이해를돕기위해 직접해봄)
+)
 public class Container extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	

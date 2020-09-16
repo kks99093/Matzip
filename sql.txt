@@ -65,3 +65,13 @@ CREATE TABLE c_code_d(
 	PRIMARY KEY(i_m,cd),
 	FOREIGN KEY(i_m) REFERENCES c_code_m(i_m)
 );
+
+조인걸어서 추천메뉴 삭제
+DELETE A
+FROM t_restaurant_recommend_menu A
+INNER JOIN t_restaurant B
+ON A.i_rest = B.i_rest
+WHERE A.i_rest = 6
+AND A.seq = 2
+AND B.i_user = 1;
+i_rest번호와 seq번호 그리고 글쓴사람의 i_user값이 다 같아야지만 삭제가능하게 함

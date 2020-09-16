@@ -2,41 +2,51 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <div class="recMenuContainer">
-			<c:forEach items="${recommendMenuList}" var="item">
-				<div class="recMenuItem" id="recMenuItem_${item.seq}">
-					<div class="pic">
-						<c:if test="${item.menu_pic != null && item.menu_pic !='' }">
-							<img src="/res/img/restaurant/${data.i_rest}/${item.menu_pic}">
-						</c:if>
-					</div>
-					<div class="info">
-						<div class="nm">${item.menu_nm}</div>
-						<div class="price"><fmt:formatNumber type="number" value="${item.menu_price}"/></div>						
-					</div>
-					<c:if test="${loginUser.i_user == data.i_user}">
-						<div class="delIconContainer" onclick="delRecMenu(${data.i_rest}, ${item.seq})">
-							<span class="material-icons">clear</span>
-						</div>							
-					</c:if>
-				</div>
-			</c:forEach>
+	<c:forEach items="${recommendMenuList}" var="item">
+		<div class="recMenuItem" id="recMenuItem_${item.seq}">
+			<div class="pic">
+				<c:if test="${item.menu_pic != null && item.menu_pic !='' }">
+					<img src="/res/img/restaurant/${data.i_rest}/${item.menu_pic}">
+				</c:if>
+			</div>
+			<div class="info">
+				<div class="nm">${item.menu_nm}</div>
+				<div class="price"><fmt:formatNumber type="number" value="${item.menu_price}"/></div>						
+			</div>
+			<c:if test="${loginUser.i_user == data.i_user}">
+				<div class="delIconContainer" onclick="delRecMenu(${data.i_rest}, ${item.seq})">
+					<span class="material-icons">clear</span>
+				</div>							
+			</c:if>
 		</div>
+	</c:forEach>
+</div>
 <div id="sectionContainerCenter">
 	<div>
 		<c:if test="${loginUser.i_user == data.i_user}">
+			<div><button onclick="isDel()">가게 삭제</button></div>			
+			<h2>- 추천 메뉴 -</h2>
 			<div>
-				<button onclick="isDel()">삭제</button>
-				
-				<form id="recFrm" action="/restaurant/addRecMenusProc" enctype="multipart/form-data" method="post">
-					<div><button type="button" onclick="addRecMenu()">메뉴 추가</button></div>
+				<div><button type="button" onclick="addRecMenu()">추천 메뉴 추가</button></div>
+				<form id="recFrm" action="/restaurant/addRecMenusProc" enctype="multipart/form-data" method="post">					
 					<input type="hidden" name="i_rest" value="${data.i_rest}">
 					<div id="recItem">
 					</div>
 					<div><input type="submit" value="등록"></div>
 				</form>
 			</div>
-		</c:if>		
+			<h2>- 메뉴 -</h2>
+			<div>
+				<form id=menuFrm" action="/restaurant/addMenuProc" enctype="multipart/form-data" method="post">
+					<input type="hidden" name="i_rest" value="${data.i_rest}">
+					<input type="file" name="menu_pic" multiple>
+					<div id="menuItem"></div>
+					<div><input type="submit" value="등록"></div>
+				</form>
+			</div>
+		</c:if>
 		<div class="restaurant-detail">
 			<div id="detail-header">
 				<div class=restaurant_title_wrap">
@@ -59,6 +69,27 @@
 						<tr>
 							<th>카테고리</th>
 							<td>${data.cd_category_nm}</td>
+						</tr>
+						<tr>
+							<th>메뉴</th>
+								<td>	
+									<div class="menuList">
+										<c:if test="${fn:length(menuList) > 0}">
+											<c:forEach var="i" begin="0" end="${fn:length(menuList) > 3 ? 2 : fn:length(menuList) - 1}">
+												<div class="menuItem">
+													<img src="/res/img/restaurant/${data.i_rest}/menu/${menuList[i].menu_pic}">
+												</div>
+											</c:forEach>
+										</c:if>
+										<c:if test="${fn:length(menuList) > 3}">
+											<div class="menuItem bg_black">
+												<div class="moreCnt">
+													+${fn:length(menuList) - 3}
+												</div>
+											</div>
+										</c:if>
+									</div>
+								</td>
 						</tr>
 					</tbody>					
 				</table>
